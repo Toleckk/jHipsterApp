@@ -127,7 +127,7 @@
     "no-empty": false,
     "no-eval": true,
     "no-inferrable-types": [true],
-    "no-shadowed-variable": true,
+    "no-shadowed-variable": false,
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
@@ -145,7 +145,7 @@
     "quotemark": [true, "single", "jsx-double", "avoid-escape"],
     "radix": true,
     "semicolon": [true, "always", "ignore-bound-class-methods"],
-    "triple-equals": [true, "allow-null-check"],
+    "triple-equals": [false, "allow-null-check"],
     "typedef-whitespace": [
       true,
       {
@@ -180,7 +180,7 @@
       "singleline": "never"
     }],
     "ordered-imports": [false],
-    "curly": [true, "ignore-same-line"],
+    "curly": [false, "ignore-same-line"],
     "switch-default": true,
     "cyclomatic-complexity": [true, 40],
     "no-invalid-this": [true],
@@ -201,7 +201,7 @@
         "allowSingleLine": true
       }
     ],
-    "object-curly-spacing": [true, "always"],
+    "object-curly-spacing": [false, "always"],
     "space-in-parens": [true, "never"],
 
     "jsx-boolean-value": [true, "never"],
