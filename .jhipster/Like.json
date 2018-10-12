@@ -1,0 +1,34 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "on",
+            "otherEntityName": "post",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "owner",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "like"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20181009202410",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "jhi_like",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

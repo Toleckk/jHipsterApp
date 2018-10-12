@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "owner",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "comment"
+        },
+        {
+            "relationshipName": "on",
+            "otherEntityName": "post",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "text",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20181009221657",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "comment",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

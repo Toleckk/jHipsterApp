@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "post"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "text",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "resource",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20181004162305",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "post",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}
