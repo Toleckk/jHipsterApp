@@ -23,6 +23,22 @@ import like, {
 import comment, {
   CommentState
 } from 'app/entities/comment/comment.reducer';
+// prettier-ignore
+import relationships, {
+  RelationshipsState
+} from 'app/entities/relationships/relationships.reducer';
+// prettier-ignore
+import relationships, {
+  RelationshipsState
+} from 'app/entities/relationships/relationships.reducer';
+// prettier-ignore
+import relationships, {
+  RelationshipsState
+} from 'app/entities/relationships/relationships.reducer';
+// prettier-ignore
+import relationships, {
+  RelationshipsState
+} from 'app/entities/relationships/relationships.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -38,6 +54,7 @@ export interface IRootState {
   readonly post: PostState;
   readonly like: LikeState;
   readonly comment: CommentState;
+  readonly relationships: RelationshipsState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -55,6 +72,7 @@ const rootReducer = combineReducers<IRootState>({
   post,
   like,
   comment,
+  relationships,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

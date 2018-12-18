@@ -7,6 +7,7 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import Post from './post';
 import Like from './like';
 import Comment from './comment';
+import Relationships from './relationships';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -16,6 +17,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/post`} component={Post} />
       <ErrorBoundaryRoute path={`${match.url}/like`} component={Like} />
       <ErrorBoundaryRoute path={`${match.url}/comment`} component={Comment} />
+      <ErrorBoundaryRoute path={`${match.url}/relationships`} component={Relationships} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

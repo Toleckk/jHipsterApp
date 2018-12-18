@@ -41,6 +41,9 @@ public class CacheConfiguration {
             cm.createCache(com.toleckk.insta.domain.Post.class.getName(), jcacheConfiguration);
             cm.createCache(com.toleckk.insta.domain.Like.class.getName(), jcacheConfiguration);
             cm.createCache(com.toleckk.insta.domain.Comment.class.getName(), jcacheConfiguration);
+            cm.createCache(com.toleckk.insta.domain.Relationships.class.getName(), jcacheConfiguration);
+            cm.createCache(com.toleckk.insta.domain.Relationships.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(com.toleckk.insta.domain.Relationships.class.getName() + ".subscribers", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

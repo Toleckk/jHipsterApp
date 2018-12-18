@@ -90,9 +90,10 @@ public class PostResource {
      */
     @GetMapping("/posts")
     @Timed
-    public ResponseEntity<List<Post>> getAllPosts(Pageable pageable) {
+    public ResponseEntity<List<Post>> getAllPosts(
+        @RequestParam(value = "owner_id", required = false) Long id, Pageable pageable) {
         log.debug("REST request to get a page of Posts");
-        Page<Post> page = postRepository.findAll(pageable);
+        Page<Post> page = id == null ? postRepository.findAll(pageable) : postRepository.findByUserId(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/posts");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

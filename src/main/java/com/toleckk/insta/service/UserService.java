@@ -2,8 +2,12 @@ package com.toleckk.insta.service;
 
 import com.toleckk.insta.config.Constants;
 import com.toleckk.insta.domain.Authority;
+import com.toleckk.insta.domain.Post;
+import com.toleckk.insta.domain.Relationships;
 import com.toleckk.insta.domain.User;
 import com.toleckk.insta.repository.AuthorityRepository;
+import com.toleckk.insta.repository.PostRepository;
+import com.toleckk.insta.repository.RelationshipsRepository;
 import com.toleckk.insta.repository.UserRepository;
 import com.toleckk.insta.security.AuthoritiesConstants;
 import com.toleckk.insta.security.SecurityUtils;
@@ -15,7 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Service class for managing users.
@@ -41,13 +50,20 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    private final RelationshipsRepository relationshipsRepository;
+
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final PostRepository postRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository,
+                       CacheManager cacheManager, RelationshipsRepository relationshipsRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.relationshipsRepository = relationshipsRepository;
+        this.postRepository = postRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -163,10 +179,10 @@ public class UserService {
      * Update basic information (first name, last name, email, language) for the current user.
      *
      * @param firstName first name of user
-     * @param lastName last name of user
-     * @param email email id of user
-     * @param langKey language key
-     * @param imageUrl image URL of user
+     * @param lastName  last name of user
+     * @param email     email id of user
+     * @param langKey   language key
+     * @param imageUrl  image URL of user
      */
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
@@ -280,6 +296,27 @@ public class UserService {
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    /**
+     * @return a page of posts of subscribed users
+     */
+    public Page<Post> getCurrentUsersFeed(Pageable pageable) {
+        Stream<Post> postStream = relationshipsRepository.findBySubscriberIsCurrentUser().stream()
+            .map(Relationships::getUser)
+            .collect(
+                (Supplier<ArrayList<Post>>) ArrayList::new,
+                (list, user) -> list.addAll(postRepository.findByUserIs(user.getId())),
+                ArrayList::addAll
+            ).stream()
+            .sorted((first, second) -> -Long.compare(first.getCreatedDate().getEpochSecond(), second.getCreatedDate().getEpochSecond()));
+
+        return new PageImpl<>(postStream
+            .skip(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .collect(Collectors.toList()),
+            pageable, postStream.count()
+        );
     }
 
     private void clearUserCaches(User user) {
