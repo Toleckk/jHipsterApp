@@ -18,7 +18,7 @@ export class Home extends React.Component<IHomeProp> {
 
   render() {
     const { account } = this.props;
-    return;
+    return (<div>Java the best</div>);
       {/*<Row>*/}
         {/*<Col md="9">*/}
           {/*<h2>Welcome, Java Hipster!</h2>*/}
